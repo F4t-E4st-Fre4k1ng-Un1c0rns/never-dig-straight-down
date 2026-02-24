@@ -17,9 +17,9 @@ jobs:
       - run: mkdir out
       - run: make export_web
       - name: Deploy preview
-              uses: rossjrw/pr-preview-action@v1
-              with:
-                  source-dir: ./out
-                  preview-branch: gh-pages
-                  qr-code: true
+        uses: rossjrw/pr-preview-action@v1
+        with:
+          source-dir: ./out
+          preview-branch: gh-pages
+          qr-code: true
 
