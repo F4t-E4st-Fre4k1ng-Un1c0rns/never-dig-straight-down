@@ -16,24 +16,10 @@ jobs:
       - uses: actions/checkout@v4
       - run: mkdir out
       - run: make export_web
-      - name: Upload Artifact
-        uses: actions/upload-pages-artifact@v3.0.1
-        with:
-          name: github-pages
-          path: "./out"
-  deploy:
-    needs: build
-    permissions:
-      pages: write
-      id-token: write
-
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-
-    runs-on: ubuntu-latest
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+      - name: Deploy preview
+              uses: rossjrw/pr-preview-action@v1
+              with:
+                  source-dir: ./out
+                  preview-branch: gh-pages
+                  qr-code: true
 
