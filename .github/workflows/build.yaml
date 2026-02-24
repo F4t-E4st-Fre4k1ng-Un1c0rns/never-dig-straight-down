@@ -1,0 +1,39 @@
+name: Build and push to GH pages
+on: [push]
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    env:
+      WASI_SDK_PATH: /opt/wasi-sdk
+    steps:
+      - run: sudo apt install wget unzip
+      - run: wget https://github.com/nesbox/TIC-80/releases/download/v1.1.2837/tic80-v1.1-linux.deb
+      - run: wget https://github.com/WebAssembly/wasi-sdk/releases/download/wasi-sdk-30/wasi-sdk-30.0-x86_64-linux.deb
+      - run: sudo dpkg -i tic80-v1.1-linux.deb
+      - run: sudo dpkg -i wasi-sdk-30.0-x86_64-linux.deb
+      - uses: actions/checkout@v4
+      - run: mkdir out
+      - run: make export_web
+      - name: Upload Artifact
+        uses: actions/upload-pages-artifact@v3.0.1
+        with:
+          name: github-pages
+          path: "./out"
+  deploy:
+    needs: build
+    permissions:
+      pages: write
+      id-token: write
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
