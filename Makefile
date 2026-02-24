@@ -59,4 +59,4 @@ run: all
 export_web: all
 	tic80 --fs="." --cmd="load game.tic & import binary build/cart.wasm & export html out & save & exit" --cli
 	$(MKDIR) out
-	unzip out/out.zip -d out
+	unzip out.zip -d out
