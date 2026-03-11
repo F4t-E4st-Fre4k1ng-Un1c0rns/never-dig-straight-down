@@ -3,3 +3,4 @@ build/
 .envrc
 out/
 out.zip
+.DS_Store
