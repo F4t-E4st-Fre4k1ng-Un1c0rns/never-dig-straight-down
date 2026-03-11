@@ -23,7 +23,7 @@ let
     {
       "x86_64-linux" = "0507679dff16814b74516cd969a9b16d2ced1347388024bc7966264648c78bfb";
       "aarch64-linux" = "0hzxsk3q025bzrv2jvni15yb96g9njdqpk32ck1df7a1gmxqhmwf";
-      "aarch64-darwin" = "2c2ed99296857e60fd14c3f40fe226231f296409502491094704089c31a16740";
+      "aarch64-darwin" = "sha256-tLif2+PdtqYPk5emMGkSXDxZw8ybeSbll8649jvHXzg=";
     }
     .${system} or (throw "Unsupported system: ${system}");
 
@@ -49,6 +49,8 @@ pkgs.mkShell {
   nativeBuildInputs = [
     pkgs.tic-80
     wasiSdk
+    pkgs.python3Packages.pillow
+    pkgs.python3
   ];
   shellHook = ''
     export WASI_SDK_PATH=${wasiSdk}
